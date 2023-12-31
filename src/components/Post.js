@@ -1,12 +1,20 @@
 import React from "react";
 import { formatDistanceToNow } from "date-fns";
 import { tr } from "date-fns/locale";
+import { useDispatch } from "react-redux";
+import { notSilAPI } from "../actions";
+import { ToastContainer, toast } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Post({ item }) {
-
+  const dispatch = useDispatch();
+  const bildirim = () => toast("Siliniyor... 👋🏼");
   function handleSil() {
+    dispatch(notSilAPI(item.id));
     // burada ilgili eylemi dispatch edin
     // sonra toast mesajı gösterin
+    bildirim();
   }
 
   return (
@@ -24,9 +32,24 @@ export default function Post({ item }) {
         </p>
       ))}
 
-      <button className="text-xs text-amber-600 mt-4 underline" onClick={handleSil}>
+      <button
+        className="text-xs text-amber-600 mt-4 underline"
+        onClick={handleSil}
+      >
         Bu notu sil
       </button>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </div>
   );
 }
